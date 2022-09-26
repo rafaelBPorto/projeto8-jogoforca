@@ -65,14 +65,11 @@ export default function App() {
         <Jogo>
             <Forca>
                 <img src={forcas[0]} />
-                <div>
-                    <button onClick={sortearPalavra}>Escolher palavra</button>
-                    <div>
-                        {palavraRodada.map((p, index)=> <MontarPalavra  key={index} tamanho={p.length}/>)}
-                    </div>
-
-                </div>
+                <button onClick={sortearPalavra}>Escolher palavra</button>
             </Forca>
+            <Letras>
+                {palavraRodada.map((p, index)=> <MontarPalavra  key={index} tamanho={p.length}/>)}
+            </Letras>
             <Alfabeto>
                 {alfabeto.map((a, index)=> <MontarAlfabeto key={index} letra = {a}/>)}
             </Alfabeto> 
@@ -154,4 +151,10 @@ const Chutar = styled.div`
         margin-right: 10px;
         margin-left: 10px;
     }
+`;
+
+const Letras = styled.div`
+    margin: none;
+    text-align: right;
+    font-size: 50px;
 `;
