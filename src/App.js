@@ -13,61 +13,41 @@ import forca5 from "./assets/img/forca5.png"
 import forca6 from "./assets/img/forca6.png"
 
 
-
-
 function MontarAlfabeto(props){
-    const {letra, estado} = props
 
     function letraSelecionada(event){
         console.log(event.currentTarget.innerText.toLowerCase())
         event.currentTarget.disabled = true;
-
     }
+    return(
+        <Letra onClick={letraSelecionada}> {props.letra.toUpperCase()} </Letra>
+    )
+}
 
-     return(
-
-            // <Letra onClick={()=>letraEscolhida(this)} disabled={estado ? true : false}> {letra.toUpperCase()} </Letra>
-            <Letra onClick={letraSelecionada} disabled={estado}> {letra.toUpperCase()} </Letra>
+function MontarPalavra(props){
+    return(
+        <>
+        <span>_</span><span> </span>
+        </>
     )
 }
 
 
 export default function App() {
-    console.log(palavras)
-    const alfabeto = [
-        {letra: 'a', estado: false},
-        {letra: 'b', estado: false},
-        {letra: 'c', estado: false},
-        {letra: 'd', estado: false},
-        {letra: 'e', estado: false},
-        {letra: 'f', estado: false},
-        {letra: 'g', estado: false},
-        {letra: 'h', estado: false},
-        {letra: 'i', estado: false},
-        {letra: 'j', estado: false},
-        {letra: 'k', estado: false},
-        {letra: 'l', estado: false},
-        {letra: 'm', estado: false},
-        {letra: 'n', estado: false},
-        {letra: 'o', estado: false},
-        {letra: 'p', estado: false},
-        {letra: 'q', estado: false},
-        {letra: 'r', estado: false},
-        {letra: 's', estado: false},
-        {letra: 't', estado: false},
-        {letra: 'u', estado: false},
-        {letra: 'v', estado: false},
-        {letra: 'w', estado: false},
-        {letra: 'x', estado: false},
-        {letra: 'y', estado: false},
-        {letra: 'z', estado: false}    
-    ]
+
+    const alfabeto = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
     const forcas = [forca0, forca1, forca2, forca3, forca4, forca5, forca6]
     const [plavraChutada, setPalavraChutada] = useState("")
-    const [palavrasTestadas, setPalavrasTestadas] = useState([]);    
-    // const [estado1, setEstado] = useState(false)
+    const [palavrasTestadas, setPalavrasTestadas] = useState([]);
+    const [palavraRodada, setPalavraRodada] = useState([]);
+      
 
-
+    function sortearPalavra(){
+        const palavraSorteada = palavras[Math.floor(Math.random()*palavras.length)]
+        const palavraArray = palavraSorteada.normalize('NFD').replace(/[\u0300-\u036f]/g,"").split('')
+        setPalavraRodada(palavraArray)
+        console.log(palavraArray) 
+    }
     
     function monitoraInput(event){
         setPalavraChutada(event.target.value)
@@ -85,11 +65,16 @@ export default function App() {
         <Jogo>
             <Forca>
                 <img src={forcas[0]} />
-                <button>Escolher palavra</button>
+                <div>
+                    <button onClick={sortearPalavra}>Escolher palavra</button>
+                    <div>
+                        {palavraRodada.map((p, index)=> <MontarPalavra  key={index} tamanho={p.length}/>)}
+                    </div>
+
+                </div>
             </Forca>
-            {/* <Alfabeto> */}
             <Alfabeto>
-                {alfabeto.map((a, index)=> <MontarAlfabeto key={index} letra = {a.letra} estado={a.estado}/>)}
+                {alfabeto.map((a, index)=> <MontarAlfabeto key={index} letra = {a}/>)}
             </Alfabeto> 
             <Chutar>
                 <div>Já sei a plavra!</div>
